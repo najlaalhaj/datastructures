@@ -10,7 +10,15 @@ public class LinkedList {
         head=null;
     }
 
-    /**
+  /**
+   * gets the head refrence to the first node in the list
+   * @return head
+   */
+  private Node getHead() {
+    return head;
+  }
+
+  /**
      * insert a string at the beginig of the list
      * @param item
      */
@@ -18,6 +26,11 @@ public class LinkedList {
         head=new Node(item,head);
     }
 
+    /**
+     * checks if a secific item is in the list
+     * @param item
+     * @return true if item is in the list
+     */
     public boolean contains(String item){
         Node temp=head;
         if(head==null) return false;
@@ -36,21 +49,31 @@ public class LinkedList {
             insertFirst(item);
         }else{
             Node temp=head;
-            while (!(temp.tail == null)) {
+            while (!(temp.tail==null)) {
                 temp=temp.tail;
             }
-            temp=new Node(item,null);
+            temp.tail=new Node(item,null);
         }
     }
 
+    /**
+     * inserts toInsert string after key string
+     * @param key
+     * @param toInsert
+     */
     public void insertAfter(String key,String toInsert) {
         Node temp=head;
         if(head==null) throw new RuntimeException("List is empty");
         while (!(temp == null) && !(temp.item.equals(key))) temp = temp.tail;
         if(temp!= null)
-        temp = new Node(toInsert, temp);
+        temp.tail = new Node(toInsert, temp.tail);
     }
 
+    /**
+     * inserts toInsert string before item string
+     * @param key
+     * @param toInsert
+     */
     public void insertBefore(String key,String toInsert){
         Node temp=head;
         Node prev=null;
@@ -60,7 +83,7 @@ public class LinkedList {
             temp=temp.tail;
         }
         if(temp!= null)
-        prev=new Node(toInsert,prev);
+        prev.tail=new Node(toInsert,prev.tail);
     }
 
     /**
@@ -87,33 +110,78 @@ public class LinkedList {
         prev.tail=temp.tail;
         return result;
     }
+
+    /**
+     * rempves the first item in the list
+     * @return the removed item
+     */
     public String removeFirst(){
         String result=null;
         if(head==null){
             throw new RuntimeException("can not delete, the list is empty");
         }
-        if(head != null){
-            result=head.item;
-            head=head.tail;
-            return result;
-        }
+        result=head.item;
+        head=head.tail;
         return result;
+
     }
 
+    /**
+     * removes the last item in the list
+     * @return the removed item
+     */
     public String removeLast(){
         String result= null;
         Node temp= head;
         Node prev = null;
+        Node curr=null;
         if(head==null) throw new RuntimeException("can not delete from an empty list");
-        while(temp != null) {
+        while(temp.tail != null) {
             prev = temp;
             temp = temp.tail;
         }
-        result=prev.item;
-        prev.tail=temp;
+        result=temp.item;
+        prev.tail=null;
         return result;
     }
 
+  /**
+   * get all items in the list
+   */
+  public void getAll(){
+    if(head==null) throw new RuntimeException("Empty list");
+    else{
+      Node temp=head;
+      while(!(temp==null)){
+        System.out.println(temp.item);
+        temp=temp.tail;
+      }
+    }
+  }
+
+  /**
+   * gets the first item in the list
+   * @return first item
+   */
+  public String getFirst(){
+    if(head==null) throw new RuntimeException("Empty List");
+    return head.item;
+  }
+
+  /**
+   * gets the last item in the list
+   * @return last item
+   */
+  public String getLast(){
+    Node temp=head;
+    if(head==null) throw new RuntimeException("Empty list");
+    while(!(temp.tail==null)) temp=temp.tail;
+    return temp.item;
+  }
+
+  /**
+     * represents a node object in the list
+     */
     private static class Node{
         private String item;
         private Node tail;
