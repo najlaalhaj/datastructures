@@ -23,6 +23,8 @@ public class Main {
     System.out.println("Removing the last item in the list : " + list.removeLast());
     System.out.println("Printing the list after removing the last item : ");
     list.getAll();
+    System.out.println(list.remove("tow"));
+    System.out.println(list.contains("tow"));
 
   }
 }
