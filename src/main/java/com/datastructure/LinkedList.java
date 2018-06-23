@@ -53,6 +53,16 @@ public class LinkedList {
     return true;
   }
 
+  public int size(){
+      int count=0;
+      Node temp=head;
+      if(this.isEmpty()) return 0;
+      while(temp!=null) {
+          count += 1;
+          temp=temp.tail;
+      }
+      return count;
+    }
   /**
    * append a string to the end of the list
    */
@@ -214,15 +224,16 @@ public class LinkedList {
 
     /**
      * get specific item in the list
-     * @param index
+     *
+     * @param  index
      * @return item
      */
   public String get(int index){
       String result=null;
       Node temp=head;
       if(this.isEmpty()) throw new RuntimeException("Empty List");
-      for(int i=0;i<index;i++) {
-          if (temp == null) throw new IndexOutOfBoundsException();
+      if(index>this.size()) throw new IndexOutOfBoundsException("Index does not exist");
+      for(int i=0;i<=index;i++) {
           result = temp.item;
           temp = temp.tail;
               }
