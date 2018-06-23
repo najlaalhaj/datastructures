@@ -38,7 +38,7 @@ public class LinkedList {
    */
   public boolean contains(String item) {
     Node temp = head;
-    if (head == null) {
+    if (this.isEmpty()) {
       return false;
     }
     while (!(temp == null) && (!temp.item.equals(item))) {
@@ -54,7 +54,7 @@ public class LinkedList {
    * append a string to the end of the list
    */
   public void insert(String item) {
-    if (head == null) {
+    if (this.isEmpty()) {
       insertFirst(item);
     } else {
       Node temp = head;
@@ -70,7 +70,7 @@ public class LinkedList {
    */
   public void insertAfter(String key, String toInsert) {
     Node temp = head;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("List is empty");
     }
     while (!(temp == null) && !(temp.item.equals(key))) {
@@ -87,7 +87,7 @@ public class LinkedList {
   public void insertBefore(String key, String toInsert) {
     Node temp = head;
     Node prev = null;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("empty list");
     }
     while (!(temp == null) && !(temp.item.equals(key))) {
@@ -106,19 +106,27 @@ public class LinkedList {
    */
   public String remove(String item) {
     Node temp = head;
-    Node prev = null;
+    Node prev = temp;
     String result = null;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("can not delete element. The list is empty");
     }
-    while (!(temp.tail == null) && !(temp.item.equals(item))) {
+    while (!(temp==null) && !(temp.item.equals(item))) {
       prev = temp;
       temp = temp.tail;
     }
-    if (temp.tail== null) throw new NoSuchElementException(item+" not in the list");
-    result = temp.item;
-    prev.tail = temp.tail;
-    return result;
+    if (temp== null) throw new NoSuchElementException(item+" not in the list");
+    if ((temp.item).equals(head.item)){
+        result=removeFirst();
+        return result;
+    }
+    if (temp.tail==null) {
+        result = removeLast();
+        return result;
+    }
+    result= temp.item;
+    prev.tail=temp.tail;
+    return  result;
   }
 
   /**
@@ -128,7 +136,7 @@ public class LinkedList {
    */
   public String removeFirst() {
     String result = null;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("can not delete, the list is empty");
     }
     result = head.item;
@@ -146,8 +154,7 @@ public class LinkedList {
     String result = null;
     Node temp = head;
     Node prev = null;
-    Node curr = null;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("can not delete from an empty list");
     }
     while (temp.tail != null) {
@@ -163,7 +170,7 @@ public class LinkedList {
    * get all items in the list
    */
   public void getAll() {
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("Empty list");
     } else {
       Node temp = head;
@@ -180,7 +187,7 @@ public class LinkedList {
    * @return first item
    */
   public String getFirst() {
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("Empty List");
     }
     return head.item;
@@ -193,7 +200,7 @@ public class LinkedList {
    */
   public String getLast() {
     Node temp = head;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("Empty list");
     }
     while (!(temp.tail == null)) {
@@ -205,8 +212,8 @@ public class LinkedList {
   public String get(int index){
       String result=null;
       Node temp=head;
-      if(head==null) throw new RuntimeException("Empty List");
-      for(int i=1;i<=index;i++){
+      if(this.isEmpty()) throw new RuntimeException("Empty List");
+      for(int i=0;i<index;i++){
           if(temp==null) throw new IndexOutOfBoundsException();
           result=temp.item;
           temp=temp.tail;

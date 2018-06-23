@@ -83,9 +83,12 @@ public void testInsertAfter(){
     assertTrue("Expects to contain one",list.contains("one"));
     assertTrue("Expects to contain tow",list.contains("tow"));
     assertTrue("Expects to contain three",list.contains("three"));
+    assertFalse("expect not to contain four",list.contains("four"));
+    assertEquals("one",list.remove("one"));
     assertEquals("tow",list.remove("tow"));
-    assertTrue(list.contains("one"));
-    assertTrue(list.contains("three"));
+    assertEquals("three",list.remove("three"));
+    assertFalse("expect not to contain one",list.contains("one"));
+    assertFalse("Expect not to contain three",list.contains("three"));
     assertFalse("expect not to contain tow",list.contains("tow"));
 
   }
