@@ -20,10 +20,13 @@ public class LinkedList {
     return head;
   }
 
-  public boolean isEmpty(){
-    if(head==null) return true;
+  public boolean isEmpty() {
+    if (head == null) {
+      return true;
+    }
     return false;
   }
+
   /**
    * insert a string at the beginig of the list
    */
@@ -209,6 +212,7 @@ public class LinkedList {
     return temp.item;
   }
 
+<<<<<<< HEAD
   public String get(int index){
       String result=null;
       Node temp=head;
@@ -217,8 +221,22 @@ public class LinkedList {
           if(temp==null) throw new IndexOutOfBoundsException();
           result=temp.item;
           temp=temp.tail;
+=======
+  public String get(int index) {
+    String result = null;
+    Node temp = head;
+    if (head == null) {
+      throw new RuntimeException("Empty List");
+    }
+    for (int i = 1; i <= index; i++) {
+      if (temp == null) {
+        throw new IndexOutOfBoundsException();
+>>>>>>> a6fea890df6b68e121ef6df340601b46701e7070
       }
-      return result;
+      result = temp.item;
+      temp = temp.tail;
+    }
+    return result;
   }
 
   /**
