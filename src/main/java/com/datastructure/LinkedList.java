@@ -212,46 +212,36 @@ public class LinkedList {
     return temp.item;
   }
 
-<<<<<<< HEAD
+    /**
+     * get specific item in the list
+     * @param index
+     * @return item
+     */
   public String get(int index){
       String result=null;
       Node temp=head;
       if(this.isEmpty()) throw new RuntimeException("Empty List");
-      for(int i=0;i<index;i++){
-          if(temp==null) throw new IndexOutOfBoundsException();
-          result=temp.item;
-          temp=temp.tail;
-=======
-  public String get(int index) {
-    String result = null;
-    Node temp = head;
-    if (head == null) {
-      throw new RuntimeException("Empty List");
-    }
-    for (int i = 1; i <= index; i++) {
-      if (temp == null) {
-        throw new IndexOutOfBoundsException();
->>>>>>> a6fea890df6b68e121ef6df340601b46701e7070
+      for(int i=0;i<index;i++) {
+          if (temp == null) throw new IndexOutOfBoundsException();
+          result = temp.item;
+          temp = temp.tail;
+              }
+              return result;
+          }
+
+          /**
+           * represents a node object in the list
+           */
+          private static class Node {
+
+              private String item;
+              private Node tail;
+
+              Node(String item, Node head) {
+                  this.item = item;
+                  this.tail = head;
+              }
+          }
       }
-      result = temp.item;
-      temp = temp.tail;
-    }
-    return result;
-  }
-
-  /**
-   * represents a node object in the list
-   */
-  private static class Node {
-
-    private String item;
-    private Node tail;
-
-    Node(String item, Node head) {
-      this.item = item;
-      this.tail = head;
-    }
-  }
 
 
-}
