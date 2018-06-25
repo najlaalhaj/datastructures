@@ -240,8 +240,8 @@ public class LinkedList {
               return result;
           }
 
-          /**
-           * represents a node object in the list
+    /**
+     * represents a node object in the list
            */
           private static class Node {
 
