@@ -41,7 +41,7 @@ public class LinkedList {
    */
   public boolean contains(String item) {
     Node temp = head;
-    if (head == null) {
+    if (this.isEmpty()) {
       return false;
     }
     while (!(temp == null) && (!temp.item.equals(item))) {
@@ -53,11 +53,21 @@ public class LinkedList {
     return true;
   }
 
+  public int size(){
+      int count=0;
+      Node temp=head;
+      if(this.isEmpty()) return 0;
+      while(temp!=null) {
+          count += 1;
+          temp=temp.tail;
+      }
+      return count;
+    }
   /**
    * append a string to the end of the list
    */
   public void insert(String item) {
-    if (head == null) {
+    if (this.isEmpty()) {
       insertFirst(item);
     } else {
       Node temp = head;
@@ -73,7 +83,7 @@ public class LinkedList {
    */
   public void insertAfter(String key, String toInsert) {
     Node temp = head;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("List is empty");
     }
     while (!(temp == null) && !(temp.item.equals(key))) {
@@ -90,7 +100,7 @@ public class LinkedList {
   public void insertBefore(String key, String toInsert) {
     Node temp = head;
     Node prev = null;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("empty list");
     }
     while (!(temp == null) && !(temp.item.equals(key))) {
@@ -109,21 +119,27 @@ public class LinkedList {
    */
   public String remove(String item) {
     Node temp = head;
-    Node prev = null;
+    Node prev = temp;
     String result = null;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("can not delete element. The list is empty");
     }
-    while (!(temp.tail == null) && !(temp.item.equals(item))) {
+    while (!(temp==null) && !(temp.item.equals(item))) {
       prev = temp;
       temp = temp.tail;
     }
-    if (temp.tail == null) {
-      throw new NoSuchElementException(item + " not in the list");
+    if (temp== null) throw new NoSuchElementException(item+" not in the list");
+    if ((temp.item).equals(head.item)){
+        result=removeFirst();
+        return result;
     }
-    result = temp.item;
-    prev.tail = temp.tail;
-    return result;
+    if (temp.tail==null) {
+        result = removeLast();
+        return result;
+    }
+    result= temp.item;
+    prev.tail=temp.tail;
+    return  result;
   }
 
   /**
@@ -133,7 +149,7 @@ public class LinkedList {
    */
   public String removeFirst() {
     String result = null;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("can not delete, the list is empty");
     }
     result = head.item;
@@ -151,8 +167,7 @@ public class LinkedList {
     String result = null;
     Node temp = head;
     Node prev = null;
-    Node curr = null;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("can not delete from an empty list");
     }
     while (temp.tail != null) {
@@ -168,7 +183,7 @@ public class LinkedList {
    * get all items in the list
    */
   public void getAll() {
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("Empty list");
     } else {
       Node temp = head;
@@ -185,7 +200,7 @@ public class LinkedList {
    * @return first item
    */
   public String getFirst() {
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("Empty List");
     }
     return head.item;
@@ -198,7 +213,7 @@ public class LinkedList {
    */
   public String getLast() {
     Node temp = head;
-    if (head == null) {
+    if (this.isEmpty()) {
       throw new RuntimeException("Empty list");
     }
     while (!(temp.tail == null)) {
@@ -207,35 +222,37 @@ public class LinkedList {
     return temp.item;
   }
 
-  public String get(int index) {
-    String result = null;
-    Node temp = head;
-    if (head == null) {
-      throw new RuntimeException("Empty List");
-    }
-    for (int i = 1; i <= index; i++) {
-      if (temp == null) {
-        throw new IndexOutOfBoundsException();
+    /**
+     * get specific item in the list
+     *
+     * @param  index
+     * @return item
+     */
+  public String get(int index){
+      String result=null;
+      Node temp=head;
+      if(this.isEmpty()) throw new RuntimeException("Empty List");
+      if(index>this.size()) throw new IndexOutOfBoundsException("Index does not exist");
+      for(int i=0;i<=index;i++) {
+          result = temp.item;
+          temp = temp.tail;
+              }
+              return result;
+          }
+
+          /**
+           * represents a node object in the list
+           */
+          private static class Node {
+
+              private String item;
+              private Node tail;
+
+              Node(String item, Node head) {
+                  this.item = item;
+                  this.tail = head;
+              }
+          }
       }
-      result = temp.item;
-      temp = temp.tail;
-    }
-    return result;
-  }
-
-  /**
-   * represents a node object in the list
-   */
-  private static class Node {
-
-    private String item;
-    private Node tail;
-
-    Node(String item, Node head) {
-      this.item = item;
-      this.tail = head;
-    }
-  }
 
 
-}
