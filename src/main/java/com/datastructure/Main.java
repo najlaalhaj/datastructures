@@ -1,5 +1,7 @@
 package com.datastructure;
 
+import java.util.ArrayList;
+
 public class Main {
 
   public static void main(String[] args) {
@@ -25,6 +27,15 @@ public class Main {
     list.getAll();
     System.out.println(list.remove("tow"));
     System.out.println(list.contains("tow"));
+      java.util.LinkedList<String> list1 = new java.util.LinkedList<>();
+      list1.add("one");
+      list1.add("one");
+      list1.add("one");
+      ArrayList<String> array = new ArrayList<>();
+      array.add("one");
+      array.add("one");
+      array.add("one");
+      System.out.println(list.equals(array));
 
   }
 }

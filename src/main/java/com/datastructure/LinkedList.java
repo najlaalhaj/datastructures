@@ -239,7 +239,6 @@ public class LinkedList {
               }
               return result;
           }
-
     /**
      * represents a node object in the list
            */
