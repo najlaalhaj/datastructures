@@ -1,11 +1,13 @@
 package com.datastructure;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+import javax.naming.OperationNotSupportedException;
 
-public class LinkedList {
+public class LinkedList<E> {
 
-  private Node head;
+  private Node<E> head;
 
   public LinkedList() {
     head = null;
@@ -16,7 +18,7 @@ public class LinkedList {
    *
    * @return head
    */
-  private Node getHead() {
+  private Node<E> getHead() {
     return head;
   }
 
@@ -28,10 +30,10 @@ public class LinkedList {
   }
 
   /**
-   * insert a string at the beginig of the list
+   * insert a E at the beginig of the list
    */
-  public void insertFirst(String item) {
-    head = new Node(item, head);
+  public void insertFirst(E item) {
+    head = new Node<E>(item, head);
   }
 
   /**
@@ -39,8 +41,8 @@ public class LinkedList {
    *
    * @return true if item is in the list
    */
-  public boolean contains(String item) {
-    Node temp = head;
+  public boolean contains(E item) {
+    Node<E> temp = head;
     if (this.isEmpty()) {
       return false;
     }
@@ -53,36 +55,39 @@ public class LinkedList {
     return true;
   }
 
-  public int size(){
-      int count=0;
-      Node temp=head;
-      if(this.isEmpty()) return 0;
-      while(temp!=null) {
-          count += 1;
-          temp=temp.tail;
-      }
-      return count;
+  public int size() {
+    int count = 0;
+    Node<E> temp = head;
+    if (this.isEmpty()) {
+      return 0;
     }
+    while (temp != null) {
+      count += 1;
+      temp = temp.tail;
+    }
+    return count;
+  }
+
   /**
-   * append a string to the end of the list
+   * append a E to the end of the list
    */
-  public void insert(String item) {
+  public void insert(E item) {
     if (this.isEmpty()) {
       insertFirst(item);
     } else {
-      Node temp = head;
+      Node<E> temp = head;
       while (!(temp.tail == null)) {
         temp = temp.tail;
       }
-      temp.tail = new Node(item, null);
+      temp.tail = new Node<E>(item, temp.tail);
     }
   }
 
   /**
-   * inserts toInsert string after key string
+   * inserts toInsert E after key E
    */
-  public void insertAfter(String key, String toInsert) {
-    Node temp = head;
+  public void insertAfter(E key, E toInsert) {
+    Node<E> temp = head;
     if (this.isEmpty()) {
       throw new RuntimeException("List is empty");
     }
@@ -90,16 +95,16 @@ public class LinkedList {
       temp = temp.tail;
     }
     if (temp != null) {
-      temp.tail = new Node(toInsert, temp.tail);
+      temp.tail = new Node<E>(toInsert, temp.tail);
     }
   }
 
   /**
-   * inserts toInsert string before item string
+   * inserts toInsert E before item E
    */
-  public void insertBefore(String key, String toInsert) {
-    Node temp = head;
-    Node prev = null;
+  public void insertBefore(E key, E toInsert) {
+    Node<E> temp = head;
+    Node<E> prev = null;
     if (this.isEmpty()) {
       throw new RuntimeException("empty list");
     }
@@ -108,38 +113,40 @@ public class LinkedList {
       temp = temp.tail;
     }
     if (temp != null) {
-      prev.tail = new Node(toInsert, prev.tail);
+      prev.tail = new Node<E>(toInsert, prev.tail);
     }
   }
 
   /**
-   * removes the first occurence of the item string
+   * removes the first occurence of the item E
    *
    * @return the removed item
    */
-  public String remove(String item) {
-    Node temp = head;
-    Node prev = temp;
-    String result = null;
+  public E remove(E item) {
+    Node<E> temp = head;
+    Node<E> prev = temp;
+    E result = null;
     if (this.isEmpty()) {
       throw new RuntimeException("can not delete element. The list is empty");
     }
-    while (!(temp==null) && !(temp.item.equals(item))) {
+    while (!(temp == null) && !(temp.item.equals(item))) {
       prev = temp;
       temp = temp.tail;
     }
-    if (temp== null) throw new NoSuchElementException(item+" not in the list");
-    if ((temp.item).equals(head.item)){
-        result=removeFirst();
-        return result;
+    if (temp == null) {
+      throw new NoSuchElementException(item + " not in the list");
     }
-    if (temp.tail==null) {
-        result = removeLast();
-        return result;
+    if ((temp.item).equals(head.item)) {
+      result = removeFirst();
+      return result;
     }
-    result= temp.item;
-    prev.tail=temp.tail;
-    return  result;
+    if (temp.tail == null) {
+      result = removeLast();
+      return result;
+    }
+    result = temp.item;
+    prev.tail = temp.tail;
+    return result;
   }
 
   /**
@@ -147,8 +154,8 @@ public class LinkedList {
    *
    * @return the removed item
    */
-  public String removeFirst() {
-    String result = null;
+  public E removeFirst() {
+    E result = null;
     if (this.isEmpty()) {
       throw new RuntimeException("can not delete, the list is empty");
     }
@@ -163,10 +170,10 @@ public class LinkedList {
    *
    * @return the removed item
    */
-  public String removeLast() {
-    String result = null;
-    Node temp = head;
-    Node prev = null;
+  public E removeLast() {
+    E result = null;
+    Node<E> temp = head;
+    Node<E> prev = null;
     if (this.isEmpty()) {
       throw new RuntimeException("can not delete from an empty list");
     }
@@ -186,7 +193,7 @@ public class LinkedList {
     if (this.isEmpty()) {
       throw new RuntimeException("Empty list");
     } else {
-      Node temp = head;
+      Node<E> temp = head;
       while (!(temp == null)) {
         System.out.println(temp.item);
         temp = temp.tail;
@@ -199,7 +206,7 @@ public class LinkedList {
    *
    * @return first item
    */
-  public String getFirst() {
+  public E getFirst() {
     if (this.isEmpty()) {
       throw new RuntimeException("Empty List");
     }
@@ -211,8 +218,8 @@ public class LinkedList {
    *
    * @return last item
    */
-  public String getLast() {
-    Node temp = head;
+  public E getLast() {
+    Node<E> temp = head;
     if (this.isEmpty()) {
       throw new RuntimeException("Empty list");
     }
@@ -222,37 +229,100 @@ public class LinkedList {
     return temp.item;
   }
 
-    /**
-     * get specific item in the list
-     *
-     * @param  index
-     * @return item
-     */
-  public String get(int index){
-      String result=null;
-      Node temp=head;
-      if(this.isEmpty()) throw new RuntimeException("Empty List");
-      if(index>this.size()) throw new IndexOutOfBoundsException("Index does not exist");
-      for(int i=0;i<=index;i++) {
-          result = temp.item;
-          temp = temp.tail;
-              }
-              return result;
-          }
+  /**
+   * get specific item in the list
+   *
+   * @return item
+   */
+  public E get(int index) {
+    E result = null;
+    Node<E> temp = head;
+    if (this.isEmpty()) {
+      throw new RuntimeException("Empty List");
+    }
+    if (index > this.size()) {
+      throw new IndexOutOfBoundsException("Index does not exist");
+    }
+    for (int i = 0; i <= index; i++) {
+      result = temp.item;
+      temp = temp.tail;
+    }
+    return result;
+  }
 
-          /**
-           * represents a node object in the list
-           */
-          private static class Node {
-
-              private String item;
-              private Node tail;
-
-              Node(String item, Node head) {
-                  this.item = item;
-                  this.tail = head;
-              }
-          }
+  @Override
+  public boolean equals(Object object) {
+    if (this == object) {
+      return true;
+    }
+    if (object == null) {
+      return false;
+    }
+    if (!(object instanceof LinkedList)) {
+      return false;
+    }
+    Iterator<E> e1 = iterator();
+    Iterator<?> e2 = ((LinkedList<?>) object).iterator();
+    while (e1.hasNext() && e2.hasNext()) {
+      E o1 = e1.next();
+      Object o2 = e2.next();
+      if (!(o1 == null ? o2 == null : o1.equals(o2))) {
+        return false;
       }
+    }
+    return !(e1.hasNext() || e2.hasNext());
+  }
+
+  public Iterator<E> iterator() {
+    return new LinkedListIterator();
+  }
+
+  /**
+   * represents a node object in the list
+   */
+  private static class Node<E> {
+
+    private E item;
+    private Node<E> tail;
+
+    Node(E item, Node<E> tail) {
+      this.item = item;
+      this.tail = tail;
+    }
+
+  }
+
+  private class LinkedListIterator implements Iterator<E> {
+
+    private Node<E> position;
+
+    public LinkedListIterator() {
+      position = head;
+    }
+
+    public boolean hasNext() {
+      return (position != null);
+    }
+
+    public E next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
+      E result = position.item;
+      position = position.tail;
+      return result;
+    }
+
+    public void reset() {
+      position = head;
+    }
+
+    public void remove() {
+      throw new UnsupportedOperationException();
+    }
+  }
+
+}
+
 
 

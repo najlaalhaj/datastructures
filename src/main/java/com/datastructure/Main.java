@@ -25,6 +25,12 @@ public class Main {
     list.getAll();
     System.out.println(list.remove("tow"));
     System.out.println(list.contains("tow"));
+    LinkedList<Integer> intList = new LinkedList<Integer>();
+    intList.insert(1);
+    intList.insert(2);
+    intList.insert(3);
+    System.out.println(list.equals(intList));
 
   }
+
 }
