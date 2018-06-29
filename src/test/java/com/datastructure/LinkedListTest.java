@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
@@ -310,17 +311,14 @@ public class LinkedListTest {
 
   @Test
   public void testEquals() {
-    LinkedList list = new LinkedList();
-    LinkedList id = new LinkedList();
+    LinkedList<String> list = new LinkedList<String>();
+    ArrayList<String> id = new ArrayList<String>();
     list.insert("one");
     list.insert("tow");
-    id.insert("one");
-    id.insert("tow");
-    assertTrue(list.contains("one"));
-    assertTrue(list.contains("tow"));
-    assertTrue(id.contains("one"));
-    assertTrue(id.contains("tow"));
-    assertTrue(list.equals(id));
+    id.add("one");
+    id.add("tow");
+    assertEquals(list, id);
+    assertEquals(id, list);
   }
 
   @Test
@@ -371,4 +369,9 @@ public class LinkedListTest {
     assertTrue(list.equals(list));
   }
 
+  @Test
+  public void npe() {
+    // Object a = new Object();
+    // Object b = null;
+  }
 }
