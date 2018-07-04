@@ -1,11 +1,9 @@
 package com.datastructure;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import javax.naming.OperationNotSupportedException;
 
-public class LinkedList<E> {
+public class LinkedList<E> implements List<E>{
 
     private Node<E> head;
 
@@ -26,6 +24,11 @@ public class LinkedList<E> {
         if (head == null) {
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean contains(Object o) {
         return false;
     }
 
@@ -122,10 +125,9 @@ public class LinkedList<E> {
      *
      * @return the removed item
      */
-    public E remove(E item) {
+    public boolean remove(E item) {
         Node<E> temp = head;
         Node<E> prev = temp;
-        E result = null;
         if (this.isEmpty()) {
             throw new RuntimeException("can not delete element. The list is empty");
         }
@@ -134,19 +136,18 @@ public class LinkedList<E> {
             temp = temp.tail;
         }
         if (temp == null) {
-            throw new NoSuchElementException(item + " not in the list");
+            return false;
         }
         if ((temp.item).equals(head.item)) {
-            result = removeFirst();
-            return result;
+            removeFirst();
+            return true;
         }
         if (temp.tail == null) {
-            result = removeLast();
-            return result;
+            removeLast();
+            return true;
         }
-        result = temp.item;
         prev.tail = temp.tail;
-        return result;
+        return true;
     }
 
     /**
@@ -251,6 +252,46 @@ public class LinkedList<E> {
     }
 
     @Override
+    public E set(int index, E element) {
+        return null;
+    }
+
+    @Override
+    public void add(int index, E element) {
+
+    }
+
+    @Override
+    public E remove(int index) {
+        return null;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public ListIterator<E> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<E> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
@@ -275,6 +316,53 @@ public class LinkedList<E> {
 
     public Iterator<E> iterator() {
         return new LinkedListIterator();
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
+    }
+
+    @Override
+    public boolean add(E e) {
+        return false;
+    }
+
+
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends E> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends E> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public void clear() {
+
     }
 
     /**
