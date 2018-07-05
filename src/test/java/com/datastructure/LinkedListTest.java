@@ -128,7 +128,7 @@ public class LinkedListTest {
     assertTrue("Expects to contain one", list.contains("one"));
     assertTrue("Expects to contain tow", list.contains("tow"));
     assertTrue("Expects to contain three", list.contains("three"));
-    assertEquals("tow", list.remove("tow"));
+    list.remove("tow");
     assertTrue(list.contains("one"));
     assertTrue(list.contains("three"));
     assertFalse("expect not to contain tow", list.contains("tow"));
@@ -147,7 +147,7 @@ public class LinkedListTest {
     assertTrue(list.contains("one"));
     assertTrue(list.contains("tow"));
     assertTrue(list.contains("three"));
-    assertEquals("one", list.remove("one"));
+    list.remove("one");
     assertFalse("expected not contain one", list.contains("one"));
     assertTrue("expected to contain tow", list.contains("tow"));
     assertTrue("expected to contain three", list.contains("three"));
@@ -165,7 +165,7 @@ public class LinkedListTest {
     assertTrue(list.contains("one"));
     assertTrue(list.contains("tow"));
     assertTrue(list.contains("three"));
-    assertEquals("three", list.remove("three"));
+    list.remove("three");
     assertTrue("expected to contain one", list.contains("one"));
     assertTrue("expected to contain tow", list.contains("tow"));
     assertFalse("expected not contain three", list.contains("three"));

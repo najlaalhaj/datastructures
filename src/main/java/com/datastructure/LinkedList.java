@@ -128,10 +128,7 @@ public class LinkedList<E> implements List<E> {
     Node<E> temp = head;
     Node<E> prev = temp;
     E result = null;
-    if (item.getClass() != this.getClass()) {
-      throw new RuntimeException();
-    }
-    item = (E) item;
+    //if (item.getClass() != this.getClass()) throw new RuntimeException();
     if (this.isEmpty()) {
       throw new RuntimeException("can not delete element. The list is empty");
     }
