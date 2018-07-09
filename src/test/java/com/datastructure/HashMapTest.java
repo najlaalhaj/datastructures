@@ -12,7 +12,7 @@ public class HashMapTest {
     @Test
     public void containsValue() throws Exception {
         HashMap<String, Integer> table = new HashMap<>();
-        assertTrue(table.put("one",1));
+        table.put("one",1);
         assertTrue(table.containsValue("one",1));
     }
     @Test
@@ -38,8 +38,10 @@ public class HashMapTest {
         HashMap<String, Integer> table = new HashMap<>();
         table.put("one",1);
         table.put("four",4);
-        assertTrue(table.containsKey("one"));
-        assertTrue(table.containsKey("four"));
+        table.put("five",5);
+        assertTrue(table.containsValue("one",1));
+        assertTrue(table.containsValue("four",4));
+        assertTrue(table.containsValue("five",5));
     }
 
     @Test
@@ -52,13 +54,18 @@ public class HashMapTest {
         assertTrue(table.containsValue("tow",2));
         assertTrue(table.containsValue("three",3));
     }
+
     @Test
     public void testPutDuplicateKey(){
-        HashMap<String, Integer> table = new HashMap<>();
+        HashMap<String, Integer> table= new HashMap<>();
         table.put("one",1);
-        assertTrue(table.containsKey("one"));
-        assertFalse(table.put("one",1));
+        assertTrue(table.containsValue("one",1));
+        table.put("one",2);
+        assertTrue(table.containsValue("one",2));
+        assertFalse(table.containsValue("one",1));
+
     }
+
 
     @Test
     public void testRemoveCollisionFirst(){

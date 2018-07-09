@@ -28,7 +28,7 @@ public class HashMap<String, Integer> {
     }
     hash = this.hashCode(key);
     temp = table[hash];
-    if (table[hash].isEmpty()) {
+    if (table[hash]==null) {
       return false;
     }
     while (!(temp == null) && (!(temp.getKey().equals(key)))) {
@@ -44,7 +44,7 @@ public class HashMap<String, Integer> {
       return false;
     }
     hash = this.hashCode(key);
-    if (table[hash].isEmpty()) {
+    if (table[hash]==null) {
       return false;
     }
     temp = table[hash];
@@ -54,12 +54,7 @@ public class HashMap<String, Integer> {
     return (temp != null);
   }
 
-  /**
-   * Insert a value into the table.
-   *
-   * @return {@code true} if the insertion is successful.
-   */
-  public boolean put(String key, Integer value) {
+  public void put(String key, Integer value) {
     int hash = this.hashCode(key);
 
     Node<String, Integer> temp = table[hash];
@@ -69,16 +64,14 @@ public class HashMap<String, Integer> {
       prev = temp;
       temp = temp.next;
     }
-
-    if (temp == null && prev == null) {
-      table[hash] = new Node<>(key, value, null);
-    } else if (temp == null && prev != null) {
+    if (temp == null){
+      if ( prev != null) {
       prev.next = new Node<>(key, value, null);
-    } else {
-      temp.value = value;
+    } else {      table[hash] = new Node<>(key, value, null);
+      }
+    }else{
+        temp.value = value;
     }
-
-    return true;
   }
 
   public boolean removeValue(String key, Integer value) {
