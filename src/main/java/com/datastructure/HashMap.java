@@ -3,6 +3,7 @@ package com.datastructure;
 import java.util.NoSuchElementException;
 
 public class HashMap<String, Integer> {
+
   private Node[] table;
   private final int capacity = 100;
 
@@ -11,115 +12,152 @@ public class HashMap<String, Integer> {
 
   }
 
-  public int hashCode(Object key) {
-    if(key.equals("one")){
+  public int hashCode(String key) {
+    if ((key.equals("one")) || (key.equals("tow")) || key.equals("three")) {
       return 82;
     }
-    if(key.equals("tow")){
-      return 82;
-    }
-    if(key.equals("three")){
-      return 82;
-    }
-    return (key.hashCode()%capacity);
+    return (key.hashCode() % capacity);
+
   }
 
-  public boolean containsKey(Object key) {
+  public boolean containsKey(String key) {
     Node<String, Integer> temp;
     int hash;
-    if(table.length==0) return false;
-    hash=this.hashCode(key);
-    temp=table[hash];
-    if(table[hash]==null) return false;
-    while(!(temp==null)&&(!(temp.key.equals(key)))){
-      temp=temp.next;
+    if (table.length == 0) {
+      return false;
     }
-    return (temp!=null);
-  }
-
-  public boolean containsValue(Object key, Object value){
-    Node<String, Integer> temp;
-    int hash;
-    if(table.length==0) return false;
-    hash=this.hashCode(key);
-    if(table[hash]==null) return false;
-    temp=table[hash];
-    while((temp!=null)&&(!(temp.value.equals(value)))){
-      temp=temp.next;
+    hash = this.hashCode(key);
+    temp = table[hash];
+    if (table[hash].isEmpty()) {
+      return false;
+    }
+    while (!(temp == null) && (!(temp.getKey().equals(key)))) {
+      temp = temp.next;
     }
     return (temp != null);
   }
 
-  public boolean put(Object key, Object value){
-    int hash=this.hashCode(key);
-    if (this.table[hash]==null) {
-      table[hash]=new Node<>(key,value,table[hash]);
-      return true;
-    }
-    if(this.containsKey(key)){
+  public boolean containsValue(String key, Integer value) {
+    Node<String, Integer> temp;
+    int hash;
+    if (table.length == 0) {
       return false;
     }
-    Node<String, Integer> temp=table[hash];
-    while (temp.next!= null){
-      temp=temp.next;
+    hash = this.hashCode(key);
+    if (table[hash].isEmpty()) {
+      return false;
     }
-    temp.next = new Node<String, Integer>(key,value,temp.next);
+    temp = table[hash];
+    while ((temp != null) && (!(temp.getValue().equals(value)))) {
+      temp = temp.next;
+    }
+    return (temp != null);
+  }
+
+  /**
+   * Insert a value into the table.
+   *
+   * @return {@code true} if the insertion is successful.
+   */
+  public boolean put(String key, Integer value) {
+    int hash = this.hashCode(key);
+
+    Node<String, Integer> temp = table[hash];
+    Node<String, Integer> prev = null;
+
+    while (temp != null && !temp.key.equals(key)) {
+      prev = temp;
+      temp = temp.next;
+    }
+
+    if (temp == null && prev == null) {
+      table[hash] = new Node<>(key, value, null);
+    } else if (temp == null && prev != null) {
+      prev.next = new Node<>(key, value, null);
+    } else {
+      temp.value = value;
+    }
+
     return true;
   }
 
-  public boolean removeValue(Object key, Object value){
+  public boolean removeValue(String key, Integer value) {
     Node<String, Integer> temp;
     Node<String, Integer> prev;
     int hash;
-    if(table.length==0) throw new NoSuchElementException("The Map table is empty");
-    hash=this.hashCode(key);
-    if (table[hash]==null) throw new NoSuchElementException("Value not found");
-    temp=table[hash];
-    prev=null;
-    while((temp!=null)&&(!(temp.value.equals(value)))){
-      prev=temp;
-      temp=temp.next;
+    if (table.length == 0) {
+      throw new NoSuchElementException("The Map table is empty");
     }
-    if((temp.value.equals(table[hash].value))){
-      table[hash]=table[hash].next;
+    hash = this.hashCode(key);
+    if (table[hash].isEmpty()) {
+      throw new NoSuchElementException("Value not found");
+    }
+    temp = table[hash];
+    prev = null;
+    while ((temp != null) && (!(temp.getValue().equals(value)))) {
+      prev = temp;
+      temp = temp.next;
+    }
+    if ((temp.getValue().equals(table[hash].getValue()))) {
+      table[hash] = table[hash].next;
       return true;
     }
-    if (temp.next==null){
-      prev.next=null;
+    if (temp.next == null) {
+      prev.next = null;
       return true;
     }
-    prev.next=temp.next;
+    prev.next = temp.next;
     return true;
   }
 
-  public Object getValue(Object key){
+  public Integer getValue(String key) {
     int hash;
     Node<String, Integer> temp;
-    if(table.length==0) throw new RuntimeException("Empty map");
-    hash=this.hashCode(key);
-    if(table[hash]==null) throw new NoSuchElementException("value not found");
-    if(table[hash].key.equals(key)){
-      return (Object) table[hash].value;
+    if (table.length == 0) {
+      throw new RuntimeException("Empty map");
     }
-    temp=table[hash];
-    while((temp!=null)&&(!(temp.key.equals(key)))){
-      temp=temp.next;
+    hash = this.hashCode(key);
+    if (table[hash].isEmpty()) {
+      throw new NoSuchElementException("value not found");
     }
-    if(temp!=null){
-      return temp.value;
+    if (table[hash].getKey().equals(key)) {
+      return (Integer) table[hash].value;
+    }
+    temp = table[hash];
+    while ((temp != null) && (!(temp.getKey().equals(key)))) {
+      temp = temp.next;
+    }
+    if (temp != null) {
+      return (Integer) temp.value;
     }
     return null;
   }
 
-    private class Node<String, Integer> {
-      Object key;
-      Object value;
-      Node<String, Integer> next;
+  private class Node<String, Integer> {
 
-      Node(Object key,Object value, Node<String, Integer> next) {
-        this.key = key;
-        this.value = value;
-        this.next = next;
+    String key;
+    Integer value;
+    Node<String, Integer> next;
+
+    Node(String key, Integer value, Node<String, Integer> next) {
+      this.key = key;
+      this.value = value;
+      this.next = next;
+    }
+
+    boolean isEmpty() {
+      if ((key == null) && (value == null)) {
+        return true;
       }
+      return false;
+    }
+
+    String getKey() {
+      return this.key;
+    }
+
+    Integer getValue() {
+      return this.value;
     }
   }
+}
