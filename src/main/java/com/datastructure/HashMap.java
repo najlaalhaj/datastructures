@@ -2,7 +2,7 @@ package com.datastructure;
 
 import java.util.NoSuchElementException;
 
-public class HashMap<String, Integer> {
+public class HashMap<K,V> {
 
   private Node[] table;
   private final int capacity = 100;
@@ -12,16 +12,13 @@ public class HashMap<String, Integer> {
 
   }
 
-  public int hashCode(String key) {
-    if ((key.equals("one")) || (key.equals("tow")) || key.equals("three")) {
-      return 82;
-    }
-    return (key.hashCode() % capacity);
+  public int hashCode(K key) {
 
+    return (key.hashCode() % capacity);
   }
 
-  public boolean containsKey(String key) {
-    Node<String, Integer> temp;
+  public boolean containsKey(K key) {
+    Node<K, V> temp;
     int hash;
     if (table.length == 0) {
       return false;
@@ -37,8 +34,8 @@ public class HashMap<String, Integer> {
     return (temp != null);
   }
 
-  public boolean containsValue(String key, Integer value) {
-    Node<String, Integer> temp;
+  public boolean containsValue(K key, V value) {
+    Node<K, V> temp;
     int hash;
     if (table.length == 0) {
       return false;
@@ -54,11 +51,11 @@ public class HashMap<String, Integer> {
     return (temp != null);
   }
 
-  public void put(String key, Integer value) {
+  public void put(K key, V value) {
     int hash = this.hashCode(key);
 
-    Node<String, Integer> temp = table[hash];
-    Node<String, Integer> prev = null;
+    Node<K, V> temp = table[hash];
+    Node<K, V> prev = null;
 
     while (temp != null && !temp.key.equals(key)) {
       prev = temp;
@@ -74,20 +71,20 @@ public class HashMap<String, Integer> {
     }
   }
 
-  public boolean removeValue(String key, Integer value) {
-    Node<String, Integer> temp;
-    Node<String, Integer> prev;
+  public boolean removeValue(K key) {
+    Node<K, V> temp;
+    Node<K, V> prev;
     int hash;
     if (table.length == 0) {
       throw new NoSuchElementException("The Map table is empty");
     }
     hash = this.hashCode(key);
-    if (table[hash].isEmpty()) {
+    if (table[hash]==null) {
       throw new NoSuchElementException("Value not found");
     }
     temp = table[hash];
     prev = null;
-    while ((temp != null) && (!(temp.getValue().equals(value)))) {
+    while ((temp != null) && (!(temp.getKey().equals(key)))) {
       prev = temp;
       temp = temp.next;
     }
@@ -103,9 +100,9 @@ public class HashMap<String, Integer> {
     return true;
   }
 
-  public Integer getValue(String key) {
+  public V getValue(K key) {
     int hash;
-    Node<String, Integer> temp;
+    Node<K, V> temp;
     if (table.length == 0) {
       throw new RuntimeException("Empty map");
     }
@@ -114,14 +111,14 @@ public class HashMap<String, Integer> {
       throw new NoSuchElementException("value not found");
     }
     if (table[hash].getKey().equals(key)) {
-      return (Integer) table[hash].value;
+      return (V) table[hash].value;
     }
     temp = table[hash];
     while ((temp != null) && (!(temp.getKey().equals(key)))) {
       temp = temp.next;
     }
     if (temp != null) {
-      return (Integer) temp.value;
+      return (V) temp.value;
     }
     return null;
   }
@@ -153,4 +150,5 @@ public class HashMap<String, Integer> {
       return this.value;
     }
   }
+
 }
