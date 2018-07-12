@@ -29,7 +29,7 @@ public class HashMap<K, V> {
     }
     hash = this.hashCode(key);
     temp = table[hash];
-    if (table[hash].isEmpty()) {
+    if (table[hash]==null) {
       return false;
     }
     while (!(temp == null) && (!(temp.getKey().equals(key)))) {
@@ -57,15 +57,14 @@ public class HashMap<K, V> {
       prev = temp;
       temp = temp.next;
     }
-
-    if (temp == null && prev == null) {
-      table[hash] = new Node<>(key, value, null);
-    } else if (temp == null && prev != null) {
+    if (temp == null){
+      if ( prev != null) {
       prev.next = new Node<>(key, value, null);
-    } else {
-      temp.value = value;
+    } else {      table[hash] = new Node<>(key, value, null);
+      }
+    }else{
+        temp.value = value;
     }
-
     return true;
   }
 

@@ -38,8 +38,10 @@ public class HashMapTest {
         HashMap<String, Integer> table = new HashMap<>();
         table.put("one",1);
         table.put("four",4);
-        assertTrue(table.containsKey("one"));
-        assertTrue(table.containsKey("four"));
+        table.put("five",5);
+        assertTrue(table.containsValue("one"));
+        assertTrue(table.containsValue("four"));
+        assertTrue(table.containsValue("five"));
     }
 
     @Test
@@ -52,13 +54,18 @@ public class HashMapTest {
         assertTrue(table.containsValue("tow"));
         assertTrue(table.containsValue("three"));
     }
+
     @Test
     public void testPutDuplicateKey(){
-        HashMap<String, Integer> table = new HashMap<>();
+        HashMap<String, Integer> table= new HashMap<>();
         table.put("one",1);
-        assertTrue(table.containsKey("one"));
-        assertFalse(table.put("one",1));
+        assertTrue(table.containsValue("one"));
+        table.put("one",2);
+        assertTrue(table.containsValue("one"));
+        assertFalse(table.containsValue("one"));
+
     }
+
 
     @Test
     public void testRemoveCollisionFirst(){
@@ -69,7 +76,7 @@ public class HashMapTest {
         assertTrue(table.containsValue("one"));
         assertTrue(table.containsValue("tow"));
         assertTrue(table.containsValue("three"));
-        table.removeValue("one",1);
+        table.removeValue("one");
         assertFalse(table.containsValue("one"));
         assertTrue(table.containsValue("tow"));
         assertTrue(table.containsValue("three"));
@@ -84,7 +91,7 @@ public class HashMapTest {
         assertTrue(table.containsValue("one"));
         assertTrue(table.containsValue("tow"));
         assertTrue(table.containsValue("three"));
-        table.removeValue("tow",2);
+        table.removeValue("tow");
         assertTrue(table.containsValue("one"));
         assertFalse(table.containsValue("tow"));
         assertTrue(table.containsValue("three"));
@@ -99,7 +106,7 @@ public class HashMapTest {
         assertTrue(table.containsValue("one"));
         assertTrue(table.containsValue("tow"));
         assertTrue(table.containsValue("three"));
-        table.removeValue("three",3);
+        table.removeValue("three");
         assertTrue(table.containsValue("one"));
         assertTrue(table.containsValue("tow"));
         assertFalse(table.containsValue("three"));
@@ -114,7 +121,7 @@ public class HashMapTest {
         assertTrue(table.containsKey("one"));
         assertTrue(table.containsKey("four"));
         assertTrue(table.containsKey("five"));
-        table.removeValue("four",4);
+        table.removeValue("four");
         assertTrue(table.containsKey("one"));
         assertFalse(table.containsKey("four"));
         assertTrue(table.containsKey("five"));
