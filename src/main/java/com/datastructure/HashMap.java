@@ -3,6 +3,7 @@ package com.datastructure;
 import java.util.NoSuchElementException;
 
 public class HashMap<K, V> {
+
   private Node<K, V>[] table;
   private final int capacity = 100;
 
@@ -13,8 +14,8 @@ public class HashMap<K, V> {
   }
 
   public int hashCode(K key) {
-
     return (key.hashCode() % capacity);
+
   }
 
   public boolean containsKey(K key) {
@@ -34,13 +35,16 @@ public class HashMap<K, V> {
     return (temp != null);
   }
 
-
   public boolean containsValue(K key) {
     return getValue(key) != null;
   }
 
+  /**
+   * Insert a value into the table.
+   *
+   * @return {@code true} if the insertion is successful.
+   */
   public boolean put(K key, V value) {
-
     int hash = this.hashCode(key);
 
     Node<K, V> temp = table[hash];
@@ -52,11 +56,10 @@ public class HashMap<K, V> {
     }
     if (temp == null){
       if ( prev != null) {
-      prev.next = new Node<>(key, value, null);
-    } else {      table[hash] = new Node<>(key, value, null);
+        prev.next = new Node<>(key, value, null);
+      } else {      table[hash] = new Node<>(key, value, null);
       }
-    }else{
-        temp.value = value;
+    }else {      temp.value = value;
     }
     return true;
   }
@@ -69,22 +72,22 @@ public class HashMap<K, V> {
       throw new NoSuchElementException("The Map table is empty");
     }
     hash = this.hashCode(key);
-    if (table[hash] == null) {
-      throw new NoSuchElementException("Value not found");
-    }
     temp = table[hash];
     prev = null;
     while ((temp != null) && (!(temp.getKey().equals(key)))) {
       prev = temp;
       temp = temp.next;
     }
-    if ((temp.getValue().equals(table[hash].getValue()))) {
-      table[hash] = table[hash].next;
+    if (temp != null) {
+      if (prev != null) {
+      prev.next = temp.next;
+      return true;
+    } else {
+        table[hash]=temp.next;
       return true;
     }
-
-    prev.next = temp.next;
-    return true;
+    }
+      return false;
   }
 
   public V getValue(K key) {
