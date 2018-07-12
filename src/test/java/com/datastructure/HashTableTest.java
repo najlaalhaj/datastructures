@@ -23,14 +23,15 @@ public class HashTableTest {
     @Test
     public void testRemove(){
         HashTable hashTable = new HashTable();
-        HashTable hashTable1 = new HashTable();
         hashTable.put("one");
         hashTable.put("tow");
-        hashTable1.put("one");
-        hashTable1.put("tow");
-        assertTrue(hashTable.equals(hashTable1));
-        assertTrue(hashTable.remove("one"));
-        assertFalse(hashTable.equals(hashTable1));
+        hashTable.put("three");
+        hashTable.put("four");
+        assertTrue(hashTable.contains("one"));
+        assertTrue(hashTable.contains("tow"));
+        assertTrue(hashTable.contains("three"));
+        assertTrue(hashTable.contains("four"));
+        assertEquals(true,hashTable.remove("tow"));
     }
     @Test
     public void testEquals(){
