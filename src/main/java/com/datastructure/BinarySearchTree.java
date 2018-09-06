@@ -43,12 +43,14 @@ public class BinarySearchTree {
             return x;
     }
 
-    public void getAll(Node node){
-        Node x=node;
+    public void getAll(int key){
+        Node x=get(key);
         if(x!=null)
-            getAll(x.left);
+            getAll(x.left.key);
         System.out.println(x);
-         getAll(x.right);
+         getAll(x.right.key);
+        System.out.println(x);
+
     }
 
     public boolean contains(int key){

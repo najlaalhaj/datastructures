@@ -34,4 +34,15 @@ public class BinarySearchTreeTest {
         assertTrue(tree.contains(5));
         assertTrue(tree.contains(7));
     }
+
+    @Test
+    public void testGetAll(){
+        BinarySearchTree tree = new BinarySearchTree();
+        tree.insert(6);
+        tree.insert(5);
+        tree.insert(7);
+        assertTrue(tree.contains(6));
+        assertTrue(tree.contains(5));
+        assertTrue(tree.contains(7));
+    }
 }
