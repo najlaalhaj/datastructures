@@ -1,4 +1,4 @@
-package com.datastructure;
+package com.streams;
 
 import java.util.Arrays;
 import java.util.function.Predicate;

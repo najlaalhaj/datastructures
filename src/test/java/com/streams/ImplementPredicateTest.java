@@ -1,8 +1,10 @@
-package com.datastructure;
+package com.streams;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.stream.Stream;
+
+import com.streams.ImplementPredicate;
 import org.junit.Before;
 import org.junit.Test;
 
