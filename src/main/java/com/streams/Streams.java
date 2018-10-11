@@ -1,16 +1,19 @@
 package com.streams;
 
+import java.awt.print.Book;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 public class Streams {
+
+    static List<Book> books;
+    static Book book1;
+    static Book book2;
+    static Book book3;
 
     // creating stream using Stream interface static factory functions
     public static void main(String[] args) {
@@ -58,8 +61,67 @@ public class Streams {
                 .mapToInt(String::length)
                 .reduce((x,y) -> x*y).orElse(0);
         System.out.println(prod);
+        int sumDoublesDivisableBy3 = IntStream.rangeClosed(1,10)
+                .peek(n -> System.out.printf("original : %d%n",n))
+                .map(n -> n*2)
+                .peek(n ->System.out.printf("doubled : %d%n",n))
+                .filter(n -> n%3==0)
+                .peek(n -> System.out.printf("filtered %d%n",n))
+                .sum();
+        System.out.println("The total sum is :"+sumDoublesDivisableBy3);
+        book1= new Book(1,"Book1");
+       books = Stream.of(book1,book2,book3).collect(Collectors.toList());
 
+       List<Book> books = Stream.of(new Book(1,"Book1"),new Book(2,"Book2"),new Book(3,"Book3"))
+               .collect(Collectors.toList());
+       HashMap<Integer,Book> bookMap = books.stream()
+               .reduce(new HashMap<Integer, Book>(),(map,book) -> {map.put(book.getId(),book);
+               return map;
+               },(map1,map2) -> {map1.putAll(map2);
+               return map1;
+               });
+       bookMap.forEach((k,v) -> System.out.println("Key : "+k+" Value : "+v.getTitle()));
+
+       String palindrome = "A santa pets rats as Pat taps a star step at NASA";
+       String forward = palindrome.toLowerCase().codePoints()
+               .filter(Character::isLetterOrDigit)
+               .collect(StringBuilder::new,
+                       StringBuilder::appendCodePoint,
+                       StringBuilder::append)
+               .toString();
+       String backward = new StringBuilder(forward).reverse().toString();
+       System.out.println(forward.equals(backward));
+       long counting =palindrome.codePoints()
+               .count();
+       System.out.println("The total number of characters is : "+counting);
     }
 
+    private static class Book{
+        private  int id;
+        private String title;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        Book(int id, String title){
+            this.id=id;
+            this.title=title;
+
+
+        }
+    }
 }
 
