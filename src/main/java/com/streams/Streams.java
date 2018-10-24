@@ -16,7 +16,7 @@ public class Streams {
     static Book book3;
 
     // creating stream using Stream interface static factory functions
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException{
 
         String names = Stream.of("Najla", "Mohamed", "Alhaj", "Hamad").collect(Collectors.joining(" "));
         System.out.println(names);
@@ -94,6 +94,8 @@ public class Streams {
        long counting =palindrome.codePoints()
                .count();
        System.out.println("The total number of characters is : "+counting);
+       Concurrency demo = new Concurrency();
+       demo.getProduct(1);
     }
 
     private static class Book{
