@@ -95,7 +95,10 @@ public class Streams {
                .count();
        System.out.println("The total number of characters is : "+counting);
        Concurrency demo = new Concurrency();
-       demo.getProduct(1);
+       demo.getProduct(66);
+       demo.syncFutures();
+
+
     }
 
     private static class Book{
