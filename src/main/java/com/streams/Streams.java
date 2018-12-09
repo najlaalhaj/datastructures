@@ -94,6 +94,13 @@ public class Streams {
        long counting =palindrome.codePoints()
                .count();
        System.out.println("The total number of characters is : "+counting);
+       System.out.println("Number of processors avaialbale is : "+Runtime.getRuntime().availableProcessors());
+       List<Integer> numbers = Arrays.asList(13,2,30,400,54,156,78,3,900,1678);
+       numbers.parallelStream()
+               .map(n -> n*2)
+               .sorted()
+               .peek(n -> System.out.printf("%s processing %d%n",Thread.currentThread().getName(),n))
+               .collect(Collectors.toList()).forEach(System.out::println);
     }
 
     private static class Book{
