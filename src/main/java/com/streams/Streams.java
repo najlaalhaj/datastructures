@@ -94,7 +94,6 @@ public class Streams {
        long counting =palindrome.codePoints()
                .count();
        System.out.println("The total number of characters is : "+counting);
-<<<<<<< HEAD
        System.out.println("Number of processors avaialbale is : "+Runtime.getRuntime().availableProcessors());
        List<Integer> numbers = Arrays.asList(13,2,30,400,54,156,78,3,900,1678);
        numbers.parallelStream()
@@ -102,13 +101,6 @@ public class Streams {
                .sorted()
                .peek(n -> System.out.printf("%s processing %d%n",Thread.currentThread().getName(),n))
                .collect(Collectors.toList()).forEach(System.out::println);
-=======
-       Concurrency demo = new Concurrency();
-       demo.getProduct(66);
-       demo.syncFutures();
-
-
->>>>>>> 4782ea429dea00edf8333572e450ec8d6fd0b342
     }
 
     private static class Book{
